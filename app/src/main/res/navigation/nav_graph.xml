@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="mbk.io.noteapp.fragments.HomeFragment"
+        android:name="mbk.io.noteapp.presentation.fragments.HomeFragment"
         android:label="HomeFragment">
         <action
             android:id="@+id/action_homeFragment_to_addNoteFragment"
@@ -18,20 +18,20 @@
 
     <fragment
         android:id="@+id/editNoteFragment"
-        android:name="mbk.io.noteapp.fragments.EditNoteFragment"
+        android:name="mbk.io.noteapp.presentation.fragments.EditNoteFragment"
         android:label="EditNoteFragment">
         <action
             android:id="@+id/action_editNoteFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
         <argument
             android:name="note"
-            app:argType="mbk.io.noteapp.model.Note"
+            app:argType="mbk.io.noteapp.data.model.Note"
             app:nullable="true"/>
     </fragment>
 
     <fragment
         android:id="@+id/addNoteFragment"
-        android:name="mbk.io.noteapp.fragments.AddNoteFragment"
+        android:name="mbk.io.noteapp.presentation.fragments.AddNoteFragment"
         android:label="AddNoteFragment">
         <action
             android:id="@+id/action_addNoteFragment_to_homeFragment"

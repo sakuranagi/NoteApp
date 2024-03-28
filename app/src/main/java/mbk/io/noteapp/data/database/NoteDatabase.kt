@@ -1,10 +1,10 @@
-package mbk.io.noteapp.database
+package mbk.io.noteapp.data.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import mbk.io.noteapp.model.Note
+import mbk.io.noteapp.data.model.Note
 
 @Database(entities = [Note::class], version = 1)
 abstract class NoteDatabase : RoomDatabase() {
@@ -19,7 +19,7 @@ abstract class NoteDatabase : RoomDatabase() {
         synchronized(LOCK) {
             instance ?:
             createDatabase(context).also{
-                instance= it
+                instance = it
             }
         }
 

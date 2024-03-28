@@ -1,4 +1,4 @@
-package mbk.io.noteapp.model
+package mbk.io.noteapp.data.model
 
 import android.os.Parcelable
 import androidx.room.Entity
@@ -11,5 +11,7 @@ data class Note(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val title: String,
-    val desc: String
-): Parcelable
+    val desc: String,
+    val category: String? = "",
+    var fav: Boolean? = false
+) : Parcelable

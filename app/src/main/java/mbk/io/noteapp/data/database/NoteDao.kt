@@ -1,4 +1,4 @@
-package mbk.io.noteapp.database
+package mbk.io.noteapp.data.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -7,7 +7,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import mbk.io.noteapp.model.Note
+import mbk.io.noteapp.data.model.Note
 
 @Dao
 interface NoteDao {

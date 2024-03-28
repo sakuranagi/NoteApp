@@ -1,8 +1,7 @@
-package mbk.io.noteapp.fragments
+package mbk.io.noteapp.presentation.fragments
 
 import android.app.AlertDialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -11,23 +10,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.MenuHost
-import androidx.lifecycle.Lifecycle
-import androidx.navigation.fragment.navArgs
-import mbk.io.noteapp.MainActivity
-import mbk.io.noteapp.R
-import mbk.io.noteapp.databinding.FragmentEditNoteBinding
-import mbk.io.noteapp.model.Note
-import mbk.io.noteapp.viewmodel.NoteViewModel
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
+import dagger.hilt.android.AndroidEntryPoint
+import mbk.io.noteapp.R
+import mbk.io.noteapp.data.model.Note
+import mbk.io.noteapp.databinding.FragmentEditNoteBinding
+import mbk.io.noteapp.presentation.MainActivity
+import mbk.io.noteapp.presentation.viewmodel.NoteViewModel
 
 
+@AndroidEntryPoint
 class EditNoteFragment : Fragment(R.layout.fragment_edit_note), MenuProvider {
 
     private var editBinding: FragmentEditNoteBinding? = null
     private val binding get() = editBinding!!
 
-    private lateinit var notesViewModel: NoteViewModel
+    private val notesViewModel: NoteViewModel by viewModels()
     private lateinit var currentNote: Note
 
     private val args: EditNoteFragmentArgs by navArgs()
@@ -46,7 +49,6 @@ class EditNoteFragment : Fragment(R.layout.fragment_edit_note), MenuProvider {
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        notesViewModel = (activity as MainActivity).noteViewModel
         currentNote = args.note!!
 
         binding.tvTitle.setText(currentNote.title)
@@ -57,7 +59,7 @@ class EditNoteFragment : Fragment(R.layout.fragment_edit_note), MenuProvider {
             val desk = binding.tvDesc.text.toString().trim()
 
             if (title.isNotEmpty()){
-                val note = Note(currentNote.id, title, desk)
+                val note = Note(currentNote.id, title, desk, binding.sCategory.selectedItem.toString())
                 notesViewModel.updateNote(note)
                 view.findNavController().popBackStack(R.id.homeFragment, false)
             }else{

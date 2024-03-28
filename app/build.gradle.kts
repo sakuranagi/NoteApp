@@ -4,6 +4,7 @@ plugins {
     id ("kotlin-kapt")
     id ("kotlin-parcelize")
     id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
     id ("androidx.navigation.safeargs")
 }
 
@@ -71,4 +72,12 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
     // Annotation processor
     ksp("androidx.lifecycle:lifecycle-compiler:$lifecycleVersion")
+
+    /*Dagger Hilt*/
+    implementation("com.google.dagger:hilt-android:2.50")
+    kapt("com.google.dagger:hilt-compiler:2.50")
+
+    /*ViewModels*/
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
+
 }

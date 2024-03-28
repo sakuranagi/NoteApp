@@ -1,36 +1,37 @@
-package mbk.io.noteapp.fragments
+package mbk.io.noteapp.presentation.fragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import mbk.io.noteapp.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 import mbk.io.noteapp.R
-import mbk.io.noteapp.adapter.NoteAdapter
+import mbk.io.noteapp.data.model.Note
 import mbk.io.noteapp.databinding.FragmentHomeBinding
-import mbk.io.noteapp.model.Note
-import mbk.io.noteapp.viewmodel.NoteViewModel
+import mbk.io.noteapp.presentation.adapter.NoteAdapter
+import mbk.io.noteapp.presentation.viewmodel.NoteViewModel
 
+@AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home),
     androidx.appcompat.widget.SearchView.OnQueryTextListener,
     MenuProvider {
 
     private var homeBinding: FragmentHomeBinding? = null
     private val binding get() = homeBinding!!
+  //  private var list = arrayListOf<Note>()
 
-    private lateinit var notesViewModel: NoteViewModel
+    private val notesViewModel: NoteViewModel by viewModels()
     private lateinit var noteAdapter: NoteAdapter
 
 
@@ -45,11 +46,9 @@ class HomeFragment : Fragment(R.layout.fragment_home),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        notesViewModel = (activity as MainActivity).noteViewModel
         setupHomeRecyclerView()
 
         binding.addNoteFab.setOnClickListener {
@@ -70,7 +69,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
     }
 
     private fun setupHomeRecyclerView() {
-        noteAdapter = NoteAdapter()
+        noteAdapter = NoteAdapter(this:: onClick)
         binding.homeRecyclerView.apply {
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             setHasFixedSize(true)
@@ -78,18 +77,31 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         }
         activity?.let {
             notesViewModel.getAllNotes().observe(viewLifecycleOwner) { note ->
-                Log.e("ololo", "setupHomeRecyclerView: $note ", )
                 noteAdapter.diff.submitList(note)
                 noteAdapter.notifyDataSetChanged()
+                Log.e("ololo", "setupHomeRecyclerView: $note", )
                 update(note)
+                //list.addAll(note)
             }
         }
+    }
+
+    private fun onClick(note: Note) {
+        note.fav = note.fav != true
+        /*if (note.fav != true){
+            note.fav = true
+        }else{
+            note.fav = false
+        }*/
+        notesViewModel.updateNote(note)
+        noteAdapter.notifyDataSetChanged()
+
     }
 
     private fun searchNote(query: String?) {
         val searchQuery = "%$query"
 
-        notesViewModel.searchNote(searchQuery).observe(this) { list ->
+        notesViewModel.searchNote(searchQuery).observe(viewLifecycleOwner) { list ->
             noteAdapter.diff.submitList(list)
         }
     }
