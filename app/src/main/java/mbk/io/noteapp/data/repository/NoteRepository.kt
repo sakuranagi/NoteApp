@@ -10,7 +10,7 @@ class NoteRepository(private val db: NoteDatabase): NoteRepositoryInt {
     override suspend fun insertNote(note: Note) = db.getNoteDao().insertNote(note)
     override suspend fun deleteNote(note: Note) = db.getNoteDao().deleteNote(note)
     override suspend fun updateNote(note: Note) = db.getNoteDao().updateNote(note)
-    override fun getAllNotes(): LiveData<List<Note>> = db.getNoteDao().getAllNotes()
+    override fun getAllNotes(): LiveData<List<Note>> = db.getNoteDao().getAllNotesSorted()
     override fun searchNote(query: String?): LiveData<List<Note>> = db.getNoteDao().searchNote(query)
 
 

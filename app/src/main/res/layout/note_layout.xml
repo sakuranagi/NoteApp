@@ -19,7 +19,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
@@ -38,49 +37,47 @@
 
                 <ImageView
                     android:id="@+id/not_fav"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:src="@drawable/ic_not_fav"
                     android:visibility="visible"
                     app:showAsAction="always" />
 
                 <ImageView
                     android:id="@+id/fav"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_marginStart="-60dp"
-                    android:padding="15dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="-40dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:paddingBottom="19dp"
                     android:src="@drawable/ic_fav"
-                    android:visibility="invisible"
+                    android:visibility="visible"
                     app:showAsAction="always" />
 
 
             </LinearLayout>
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tv_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/poppins"
+                android:maxHeight="170dp"
+                android:text="Description"
+                android:textColor="@color/pink"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_category"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="24dp"
+                android:layout_marginTop="10dp"
+                android:gravity="end"
+                android:text="Category"
+                android:textColor="@color/pink" />
 
-                <TextView
-                    android:id="@+id/tv_desc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/poppins"
-                    android:maxHeight="170dp"
-                    android:text="Description"
-                    android:textColor="@color/pink"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tv_category"
-                    android:layout_width="match_parent"
-                    android:layout_height="24dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="end"
-                    android:text="Category"
-                    android:textColor="@color/pink" />
-            </LinearLayout>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
